@@ -1,73 +1,48 @@
-
-from src.Entity.Conditions import Conditions
-from src.Entity.Hypothesis import Hypothesis
-
-
-def add_condition():
-    attribute = str(input("Ingresa un atributo: "))
-    value = str(input("Ingresa un valor: "))
-    logic_operator = str(input("Ingresa un operador logico: "))
-
-    condition = Conditions(attribute, value, logic_operator)
-
-    print("Regla creada: ", "VALOR: ", condition.value, "ATRIBUTO: ", condition.attribute, "OPERADOR: ",
-          condition.logic_operator)
-
-    while True:
-        print("DESEAS AGREGAR OTRA REGLA")
-        print("1. SI")
-        print("2. NO")
-
-        option_con = input("Ingrese una opcion: ")
-
-        if int(option_con) == 1:
-            add_condition()
-        if int(option_con) == 2:
-            print("Saliendo... ")
-            break
-
-
-def add_hypothesis():
-    print("\n\n--- CREA LA HIPOTESIS INICIAL ---")
-    attribute = str(input("Ingresa un atributo: "))
-    value = str(input("Ingresa un valor: "))
-
-    hypothesis = Hypothesis(attribute, value)
-
-    print("Hipotesis creada: ", "VALOR: ", hypothesis.value, "ATRIBUTO: ", hypothesis.attribute)
-
-    while True:
-        print("\n --- MENU DE OPCIONES DE HIPOTESIS ", hypothesis.attribute, " ---")
-        print("1. Agregar condicion")
-        print("2. Salir")
-
-        option_hyp = input("Ingrese una opcion: ")
-
-        if int(option_hyp) == 1:
-            add_condition()
-        if int(option_hyp) == 2:
-            print("Saliendo... ")
-            break
-
-
-def backward_chaining():
-    print("backward")
-
+from src.Entity.Graph import Graph
 
 if __name__ == '__main__':
+    graph = Graph()
 
-    while True:
-        print("MENU DE OPCIONES")
-        print("1. Crear Hipotesis")
-        print("2. Encadenamiento hacia atras")
-        print("3. Salir")
+    hypothesis_a = graph.add_node("A", "True")
+    hypothesis_b = graph.add_node("B", "True")
+    hypothesis_c = graph.add_node("C", "True")
 
-        option = input("Ingresa una opcion: ")
+    hypothesis_g = graph.add_node("G", "True")
+    hypothesis_j = graph.add_node("J", "True")
 
-        if int(option) == 1:
-            add_hypothesis()
-        if int(option) == 2:
-            backward_chaining()
-        if int(option) == 3:
-            print("Saliendo... ")
-            break
+    # rule 1.
+    hypothesis_d = graph.add_node("D", "True")
+    condition_1 = graph.add_edge(hypothesis_a, hypothesis_d, "Y")
+
+    # rule 2.
+    hypothesis_f = graph.add_node("F", "True")
+    condition_2 = graph.add_edge(hypothesis_d, hypothesis_f, "Y")
+    condition_3 = graph.add_edge(hypothesis_b, hypothesis_f, "Y")
+
+    # rule 3.
+    hypothesis_h = graph.add_node("H", "True")
+    condition_4 = graph.add_edge(hypothesis_f, hypothesis_h, "Y")
+    condition_5 = graph.add_edge(hypothesis_g, hypothesis_h, "Y")
+
+    # rule 4.
+    hypothesis_i = graph.add_node("I", "True")
+    condition_6 = graph.add_edge(hypothesis_c, hypothesis_i, "Y")
+
+    # rule 5.
+    hypothesis_w = graph.add_node("W", "True")
+    condition_7 = graph.add_edge(hypothesis_h, hypothesis_w, "Y")
+    condition_8 = graph.add_edge(hypothesis_i, hypothesis_w, "Y")
+
+    # rule 6
+    # condition_7 = graph.add_edge(hypothesis_h, hypothesis_w, "Y")
+    condition_9 = graph.add_edge(hypothesis_j, hypothesis_w, "Y")
+
+    # rule 7
+    condition_10 = graph.add_edge(hypothesis_b, hypothesis_g, "Y")
+
+    goal_node = hypothesis_w
+    backward_result = graph.backward_chaining(goal_node)
+    print("\n\nNodos que satisfacen las condiciones para que el nodo objetivo sea verdadero:")
+    for node in backward_result:
+        print(f"[Attribute: {node.attribute}, Value: {node.value}]", end=" -> \n")
+
