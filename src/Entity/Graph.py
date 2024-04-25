@@ -1,7 +1,6 @@
 from src.Entity.Edge import Edge
 from src.Entity.Node import Node
 
-
 class Graph:
     def __init__(self):
         self.nodes: list[Node] = []

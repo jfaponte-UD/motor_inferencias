@@ -7,7 +7,6 @@
 from src.Entity.Hypothesis import Hypothesis
 from src.Entity.Conditions import Conditions
 
-
 class Node:
     def __init__(self, hypothesis: Hypothesis, conditions: list[Conditions] = None):
         self.hypothesis: Hypothesis = hypothesis
