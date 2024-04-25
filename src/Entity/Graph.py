@@ -3,8 +3,9 @@ from src.Entity.Node import Node
 
 
 class Graph:
-    def __init__(self):
+    def __init__(self, node1: Node, node2: Node):
         self.nodes: list[Node] = []
+        self.add_edge(node1, node2)
 
     def add_edge(self, node1: Node, node2: Node):
         if node1 and node2:

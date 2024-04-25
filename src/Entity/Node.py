@@ -4,15 +4,15 @@
 # Hipotesis:
 #   W Entonces V
 
-from src.Entity.Hypothesis import Hypothesis
-from src.Entity.Conditions import Conditions
-
-
 class Node:
-    def __init__(self, hypothesis: Hypothesis, conditions: list[Conditions] = None):
-        self.hypothesis: Hypothesis = hypothesis
+    def __init__(self, attribute: str, value: str, conditions: list = []):
+        self.attribute: str = attribute
+        self.value: str = value
         self.conditions: list = conditions
         self.edges: list = []
 
     def add_edge(self, edge):
         self.edges.append(edge)
+
+    def addCondition(self, condition):
+        self.conditions.append(condition)
